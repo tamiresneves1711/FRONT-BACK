@@ -136,10 +136,22 @@ app.delete('/delete/:id', async (req, res)=> {
 });
 
 
-
+/*
 app.get('/TodasAsFrases', (req, res)=>{
     res.send({ frases});
+});*/
+
+// Rota (Get) para obter todas as frases
+app.get('/TodasAsFrases', async (req, res)=> {
+    try {
+        const frases = await Frase.find(); // Obtém todas as frases
+        res.send({ frases: frases.map(f => f.texto)}); // Retorna apenas os textos das frases
+    } catch (error) {
+        res.status(500).send({ erro: "erro ao acessar as frases."});
+    }
+
 });
+
 
 
 // Rota (Update) para atualizar uma frase existente
