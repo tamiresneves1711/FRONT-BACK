@@ -112,7 +112,7 @@ app.post('/add', async(req, res) => {
     }
 });
 
-
+/*
 app.delete('/delete/:index', (req, res)=>{
     const {index} = req.params;
 
@@ -122,7 +122,19 @@ app.delete('/delete/:index', (req, res)=>{
     }else {
         res.status(404).send({ erro: "Frase não encontrada"});
     }
+});*/
+
+// Rota (Delete) para deletar uma frase
+app.delete('/delete/:id', async (req, res)=> {
+    const {id} = req.params;
+    const deletedFrase = await Frase.findByIdAndDelete(id); // Deleta a frase pelo ID
+    if(deletedFrase){
+        res.send({ mensagem: "Frase deletada com sucesso!", frase: deletedFrases });
+    }else {
+        res.status(404).send({ erro: "Frase não encontrada"});
+    }
 });
+
 
 
 app.get('/TodasAsFrases', (req, res)=>{
