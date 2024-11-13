@@ -1,0 +1,102 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(3, 233, 183);
+    color: rgb(139, 6, 6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+h1 {
+    color: rgb(2, 14, 53);
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: rgb(2, 14, 53);
+    margin-top: 30px;
+}
+
+#frase-container {
+    background-color: rgba(148, 155, 153, 0.418);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(red, green, blue, alpha);
+    padding: 20px;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+}
+
+#frase {
+    font-size: 1.5rem;
+    color: rgb(179, 6, 6);
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+
+#access-count {
+    font-size: 0.9rem;
+    color: rgb(5, 0, 2);
+}
+
+button {
+    background-color: rgb(140, 146, 146);
+    color: rgb(4, 5, 37);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: rgba(226, 42, 42, 0.959);
+}
+
+#novaFraseInput {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #add;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+#frases-list {
+    list-style-type: none;
+    padding: 0;
+    max-width: 400px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+#frases-list li {
+    background-color: rgb(140, 146, 146);
+    border: 1px solid rgb(0, 7, 7);
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(red, green, blue, alpha);
+    font-size: 1rem;
+    color: rgb(6, 22, 1);
+    text-align: left;
+}
+
+#caixinha{
+    background-color: rgba(12, 117, 121, 0.747);
+    padding: 50px;
+    border-radius: 40px;
+}
