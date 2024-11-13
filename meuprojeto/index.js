@@ -4,9 +4,28 @@ const app = express();
 const PORT = 3000;
 
 app.use(express.json())
-app.use(express.static('public'))
+app.use(express.static('public'));
+
+const mongoose = require('mongoose');
+
+// conectar ao MongoDB
+mongoose.connect('mongodb+srv://tamiresneves1711:QYHMTRPmpRL1IVpj@cluster0.kftbf.mongodb.net/', {
+    useNewUrlParser: true, 
+    useUniFiedTopology: true 
+})
+     .then(() => console.log("Conectado ao MongoDB"))
+     .catch((err) => console.log("Erro ao conectar ao MongoDB", err));
+
+
+// definindo o modelo de Frase
+const fraseSchema = new mongoose.Schema({
+    texto: {type: String, required: true} // o campo "texto" é obrigatório
+});
+
+const Frase = mongoose.model('Frase', fraseSchema); // Criando o modelo a partir do schema
 
 // Array de piadas
+/*
 const frases = [
     "Eu vou aprender!",
     "Eu vou ser persistente!",
@@ -15,7 +34,7 @@ const frases = [
     "Semana maravilhosa!",
     "Sucesso e Paz!"
 
-];
+];*/
 
 // Middleware para registrar requisições
 app.use((req, res, next) => {
@@ -27,6 +46,7 @@ app.use((req, res, next) => {
 let frasesAccessCount = 0;
 
 // Rota para gerar uma piada aleatória
+ /* 
 app.get('/frases', (req, res) => {
     frasesAccessCount++;
     const randomIndex = Math.floor(Math.random() * frases.length);
@@ -35,7 +55,28 @@ app.get('/frases', (req, res) => {
         frases: randomfrases,
         acesses: `Esta rota foi acessada ${frasesAccessCount} vezes!`
     });
-});
+});*/
+
+// Rota para gerar uma piada aleatória
+app.get('/frases', async(req, res) => {
+    try { 
+        frasesAccessCount++;
+        const totalFrases = await Frase.countDocuments(); // Conta o total de frases no banco
+        const randomIndex = Math.floor(Math.random() *totalFrases); // Gera um índice aleatório
+        const randomFrase = await Frase.findOne().skip(randomIndex); // Pega a frase aleatória 
+        res.send({
+            frases: randomFrase.texto, // Retorna o texto da frase
+            acesses: `Esta rota foi acessada ${frasesAccessCount} vezes!`
+
+        });
+    } catch (error) {
+        res.status(500).send({ erro: "erro ao acessar o banco de dados"});
+    }
+});    
+    
+       
+
+
 
 // Iniciando o servidor 
 app.listen(PORT, () => {
@@ -47,7 +88,8 @@ app.get('/VivaoHoje', (req,res)=>{
 });
 
 
-// Rota (create) para adicionar uma nova frase
+// Rota (create) para adicionar uma nova frase 
+/*
 app.post('/add', (req, res) =>{
     const { novaFrase } = req.body;
     if (novaFrase){
@@ -55,6 +97,18 @@ app.post('/add', (req, res) =>{
         res.send({ mensagem: "frase adicionada com sucesso!", frases});      
     }else {
         res.status(400).send({ erro: "Por favor, forneça uma frase para adicionar. "})
+    }
+}); */
+
+// Rota (create) para adicionar uma nova frase
+app.post('/add', async(req, res) => {
+    const { novaFrase } = req.body;
+    if (novaFrase) {
+        const frase = new Frase({texto: novaFrase }) // Cria uma nova frase
+        await frase.save(); // Salva a frase no banco de dados 
+        res.send({ mensagem: "frase adicionada com sucesso!" });      
+    }else {
+        res.status(400).send({ erro: "Por favor, forneça uma frase para adicionar. "});
     }
 });
 
