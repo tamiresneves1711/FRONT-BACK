@@ -12,7 +12,7 @@ async function getallFrases() {
     const data = await response.json();
 
     const frasesList = document.getElementById('frases-list');
-    frasesList.innerHTML = ''; // Limpar lista antes de renderizar novamente
+    frasesList.innerHTML = ''; // Limpar lista antes de renderizar novamente  oi
 
     data.frases.forEach((frase, index) => {
         const listItem = document.createElement('li');
